@@ -1,0 +1,20 @@
+.navbar img{
+    width: 1.2rem;
+}
+
+.backg{
+    background: black;
+}
+
+.portadas{
+    width: 300px;
+    height: 300px;
+}
+
+.bienvenida{
+    background: url("../img/fondo.jpg");
+    background-position: center center;
+    background-size: cover;
+    height: 650px;
+}
+

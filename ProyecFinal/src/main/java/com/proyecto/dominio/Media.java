@@ -16,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -38,14 +37,10 @@ public class Media implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @Size(max = 255)
     @Column(name = "urlmedia")
     private String urlmedia;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     @Column(name = "tipo")
     private String tipo;
     @JoinColumn(name = "id_videojuego", referencedColumnName = "id")
@@ -57,12 +52,6 @@ public class Media implements Serializable {
 
     public Media(Integer id) {
         this.id = id;
-    }
-
-    public Media(Integer id, String urlmedia, String tipo) {
-        this.id = id;
-        this.urlmedia = urlmedia;
-        this.tipo = tipo;
     }
 
     public Integer getId() {

@@ -6,6 +6,7 @@ package com.proyecto.data;
 
 import com.proyecto.dominio.Videojuegos;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -13,12 +14,13 @@ import javax.persistence.PersistenceContext;
  *
  * @author jonat
  */
+@Stateless
 public class VideojuegosDaoImpl implements VideojuegosDao{
     @PersistenceContext(unitName="ProyectoFinalPU")
     EntityManager em;
     
     @Override
-    public List<Videojuegos> findAllUsuarios(){
+    public List<Videojuegos> findAllVideojuegos(){
         return em.createNamedQuery("Videojuegos.findAll").getResultList();
     }
     
@@ -39,16 +41,16 @@ public class VideojuegosDaoImpl implements VideojuegosDao{
     
     @Override
     public void insertVideojuegos(Videojuegos v){
-        
+        em.persist(v);
     }
     
     @Override
     public void updateVideojuegos(Videojuegos v){
-        
+        em.merge(v);
     }
     
     @Override  
     public void deleteVideojuegos(Videojuegos v){
-        
+        em.remove(em.merge(v));
     }
 }

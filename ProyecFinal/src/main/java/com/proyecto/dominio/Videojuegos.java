@@ -17,7 +17,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -41,19 +40,14 @@ public class Videojuegos implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 200)
+    @Size(max = 200)
     @Column(name = "nombre")
     private String nombre;
-    @Basic(optional = false)
-    @NotNull
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "precio")
-    private float precio;
-    @Basic(optional = false)
-    @NotNull
+    private Float precio;
     @Column(name = "stock")
-    private int stock;
+    private Integer stock;
     @Size(max = 1000)
     @Column(name = "descripcion")
     private String descripcion;
@@ -73,12 +67,14 @@ public class Videojuegos implements Serializable {
         this.id = id;
     }
 
-    public Videojuegos(Integer id, String nombre, float precio, int stock) {
-        this.id = id;
+    public Videojuegos(String nombre, Float precio, Integer stock, String descripcion) {
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
+        this.descripcion = descripcion;
     }
+    
+    
 
     public Integer getId() {
         return id;
@@ -96,19 +92,19 @@ public class Videojuegos implements Serializable {
         this.nombre = nombre;
     }
 
-    public float getPrecio() {
+    public Float getPrecio() {
         return precio;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(Float precio) {
         this.precio = precio;
     }
 
-    public int getStock() {
+    public Integer getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
 
@@ -174,7 +170,9 @@ public class Videojuegos implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.dominio.Videojuegos[ id=" + id + " ]";
+        return "Videojuegos{" + "id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", stock=" + stock + ", descripcion=" + descripcion + ", mediaList=" + mediaList + ", carritoList=" + carritoList + ", videojuegoPlataformaList=" + videojuegoPlataformaList + ", valoracionesList=" + valoracionesList + '}';
     }
+
+    
     
 }

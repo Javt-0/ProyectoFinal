@@ -12,3 +12,5 @@ navbarToggle.ontransitionend = alturaImg;
 navbarToggle.ontransitionstart = alturaImg;
 window.onresize = alturaImg;
 window.onload = alturaImg;
+
+

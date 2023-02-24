@@ -20,7 +20,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -48,40 +47,26 @@ public class Usuarios implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "nombre")
+    @Size(max = 255)
+    @Column(name = "nombre",nullable = false)
     private String nombre;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "apellidos")
+    @Size(max = 255)
+    @Column(name = "apellidos", nullable = false)
     private String apellidos;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "email")
+    @Size(max = 255)
+    @Column(name = "email", nullable = false)
     private String email;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "nombre_usuario")
+    @Size(max = 255)
+    @Column(name = "nombre_usuario", nullable = false)
     private String nombreUsuario;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1500)
-    @Column(name = "clave")
+    @Size(max = 1500)
+    @Column(name = "clave", nullable = false)
     private String clave;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_nacimiento")
+    @Column(name = "fecha_nacimiento", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "pais")
     private String pais;
     @Size(max = 255)
@@ -101,8 +86,7 @@ public class Usuarios implements Serializable {
         this.id = id;
     }
 
-    public Usuarios(Integer id, String nombre, String apellidos, String email, String nombreUsuario, String clave, Date fechaNacimiento, String pais) {
-        this.id = id;
+    public Usuarios(String nombre, String apellidos, String email, String nombreUsuario, String clave, Date fechaNacimiento, String pais, String imgPerfil) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
@@ -110,8 +94,16 @@ public class Usuarios implements Serializable {
         this.clave = clave;
         this.fechaNacimiento = fechaNacimiento;
         this.pais = pais;
+        this.imgPerfil = imgPerfil;
     }
 
+    public Usuarios(String nombreUsuario, String clave) {
+        this.nombreUsuario = nombreUsuario;
+        this.clave = clave;
+    }
+    
+    
+    
     public Integer getId() {
         return id;
     }
@@ -230,7 +222,9 @@ public class Usuarios implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.dominio.Usuarios[ id=" + id + " ]";
+        return "Usuarios{" + "id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email + ", nombreUsuario=" + nombreUsuario + ", clave=" + clave + ", fechaNacimiento=" + fechaNacimiento + ", pais=" + pais + ", imgPerfil=" + imgPerfil + ", ordenesList=" + ordenesList + ", carritoList=" + carritoList + ", valoracionesList=" + valoracionesList + '}';
     }
+
+    
     
 }

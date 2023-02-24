@@ -5,6 +5,8 @@
 package com.proyecto.service;
 
 import com.proyecto.dominio.Usuarios;
+import java.time.Period;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,4 +27,10 @@ public interface UsuarioService {
     public void actualizarUsuarios(Usuarios u);
     
     public void eliminarUsuarios(Usuarios u);
+    
+    public Usuarios usuarioSesion(Usuarios usuario);
+    
+    public boolean validacionUsu (Usuarios usuario);
+    
+    public String calcularEdad(Usuarios usuario);
 }

@@ -6,6 +6,7 @@ package com.proyecto.data;
 
 import com.proyecto.dominio.Plataforma;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -13,6 +14,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author jonat
  */
+@Stateless
 public class PlataformaDaoImpl implements PlataformaDao{
     @PersistenceContext(unitName="ProyectoFinalPU")
     EntityManager em;

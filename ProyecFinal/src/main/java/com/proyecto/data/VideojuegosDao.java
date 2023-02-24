@@ -12,7 +12,7 @@ import java.util.List;
  * @author jonat
  */
 public interface VideojuegosDao {
-    public List<Videojuegos> findAllUsuarios();
+    public List<Videojuegos> findAllVideojuegos();
     
     public Videojuegos findVideojuegosById(Videojuegos v);
     

@@ -4,6 +4,7 @@ package com.proyecto.data;
 import com.proyecto.dominio.Usuarios;
 import com.proyecto.dominio.Valoraciones;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -11,6 +12,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author jonat
  */
+@Stateless
 public class ValoracionesDaoImpl implements ValoracionesDao{
     @PersistenceContext(unitName="ProyectoFinalPU")
     EntityManager em;

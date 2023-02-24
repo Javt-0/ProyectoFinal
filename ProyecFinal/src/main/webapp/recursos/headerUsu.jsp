@@ -1,9 +1,9 @@
 <%-- 
-    Document   : index
-    Created on : 21 feb. 2023, 20:28:32
+    Document   : headerUsu
+    Created on : 21 feb. 2023, 22:30:55
     Author     : jonat
 --%>
-
+<%@page import="com.proyecto.dominio.Usuarios"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -34,7 +34,7 @@
     String rutaAbsoluta = request.getRequestURI();
     if (rutaAbsoluta.equals("/ProyectoFinal/") || rutaAbsoluta.equals("/ProyectoFinal/index.jsp")) {
     %>
-        <script defer src="/static/js/bienvenida.js"></script>
+        <script defer src="./static/js/bienvenida.js"></script>
     <%
     }
     %>
@@ -48,7 +48,7 @@
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark backg">
         <div class="container-fluid">
-            <a class="navbar-brand font-weight-bold" href="index.jsp">
+            <a class="navbar-brand font-weight-bold" href="./homeUsu.jsp">
                 <img class="mr-2" src="./static/img/logo.png" />
                 App
             </a>
@@ -66,13 +66,41 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="d-flex justify-content-between w-100">
                     <ul class="navbar-nav">
+                        <%
+                        Usuarios usuario = (Usuarios) session.getAttribute("usuario");
+                        if (usuario.getNombreUsuario() != null) {
+                        %>
                           <li class="nav-item ms-4">
-                            <a class="nav-link" href="./registrar.jsp">Registrarse&nbsp&nbsp<i class="fa-sharp fa-solid fa-align-left"></i></a>
+                            <a class="nav-link" href="./añadir.jsp">Mi lista de Videojuegos&nbsp&nbsp&nbsp<i class="fa-sharp fa-solid fa-plus"></i></a>
+                          </li>
+                          <li class="nav-item ms-4">
+                            <a class="nav-link" href="./grafico.jsp">Vista Usuario&nbsp&nbsp&nbsp<i class="fa fa-chart-simple"></i></a>
+                          </li>
+                          <li class="nav-item ms-4">
+                            <a class="nav-link text-danger" href="./recursos/destroy.jsp">Cerrar Sesion&nbsp&nbsp<i class="fa-sharp fa-solid fa-power-off"></i></a>
+                          </li>
+                        <%
+                        } else {
+                        %>
+                          <li class="nav-item ms-4">
+                            <a class="nav-link" href="./registrar.jsp">Registrarse</a>
                           </li>
                           <li class="nav-item ms-4">
                             <a class="nav-link" href="./login.jsp">Login&nbsp&nbsp<i class="fa fa-right-to-bracket"></i></a>
                           </li>
+                        <%
+                        }
+                        %>
                         </ul>
+                        <%
+                        if (usuario.getNombreUsuario() != null) {
+                        %>
+                          <div class="p-2">
+                            <a href="" style="text-decoration: none;"> <img src="<%= usuario.getImgPerfil() %>" class="rounded-circle" style=" border-radius: 50%; max-width: 90px; max-height: 90px;"> &nbsp&nbsp<%= usuario.getEmail() %></a> 
+                          </div>
+                        <%
+                        }
+                        %>
                 </div>
             </div>
             
@@ -80,12 +108,3 @@
     </nav>
 
       <main class="">
-        <div class="bienvenida d-flex align-items-center justify-content-center">
-            <div class="text-center">
-                <h1>Comienza a comprar tus Videojuegos ahora</h1>
-                <a class="btn btn-lg btn-dark" href="./login.jsp">Empezar</a>
-            </div>
-        </div>
-   
-
-<jsp:include page="./recursos/footer.jsp" />

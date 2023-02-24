@@ -103,7 +103,7 @@
                 }
                 error  = null;
                 %> 
-              <form  method="POST" action="Usuario?accion=logear">
+              <form  method="POST" action="UsuarioControlador?accion=logear">
                 <!--Primer campo-->
                 <div class="mb-3 row">
                   <label class="col-md-4 col-form-label text-md-end">Nombre de Usuario</label>

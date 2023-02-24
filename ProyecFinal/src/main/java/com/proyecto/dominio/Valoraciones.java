@@ -16,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -41,10 +40,8 @@ public class Valoraciones implements Serializable {
     @Size(max = 1000)
     @Column(name = "comentario")
     private String comentario;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "puntuacion")
-    private int puntuacion;
+    private Integer puntuacion;
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Usuarios idUsuario;
@@ -57,11 +54,6 @@ public class Valoraciones implements Serializable {
 
     public Valoraciones(Integer id) {
         this.id = id;
-    }
-
-    public Valoraciones(Integer id, int puntuacion) {
-        this.id = id;
-        this.puntuacion = puntuacion;
     }
 
     public Integer getId() {
@@ -80,11 +72,11 @@ public class Valoraciones implements Serializable {
         this.comentario = comentario;
     }
 
-    public int getPuntuacion() {
+    public Integer getPuntuacion() {
         return puntuacion;
     }
 
-    public void setPuntuacion(int puntuacion) {
+    public void setPuntuacion(Integer puntuacion) {
         this.puntuacion = puntuacion;
     }
 

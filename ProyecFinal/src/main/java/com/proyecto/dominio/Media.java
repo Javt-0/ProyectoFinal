@@ -50,6 +50,12 @@ public class Media implements Serializable {
     public Media() {
     }
 
+    public Media(String urlmedia, String tipo, Videojuegos idVideojuego) {
+        this.urlmedia = urlmedia;
+        this.tipo = tipo;
+        this.idVideojuego = idVideojuego;
+    }
+    
     public Media(Integer id) {
         this.id = id;
     }
@@ -108,7 +114,9 @@ public class Media implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.dominio.Media[ id=" + id + " ]";
+        return "Media{" + "id=" + id + ", urlmedia=" + urlmedia + ", tipo=" + tipo + ", idVideojuego=" + idVideojuego + '}';
     }
+
+    
     
 }

@@ -7,12 +7,14 @@ package com.proyecto.service;
 import com.proyecto.data.VideojuegosDao;
 import com.proyecto.dominio.Videojuegos;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
  *
  * @author jonat
  */
+@Stateless
 public class VideojuegoServiceImpl implements VideojuegoService{
     @Inject 
     private VideojuegosDao videojuegosDao;

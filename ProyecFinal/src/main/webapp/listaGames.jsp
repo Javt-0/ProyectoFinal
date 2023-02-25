@@ -5,6 +5,9 @@
 --%>
 
 
+<%@page import="com.proyecto.service.MediaService"%>
+<%@page import="com.proyecto.service.MediaServiceImpl"%>
+<%@page import="com.proyecto.dominio.Media"%>
 <%@page import="com.proyecto.dominio.Videojuegos"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -25,14 +28,29 @@
                 <% 
                 int id = 0;
                 List<Videojuegos> listaGames = (List<Videojuegos>) session.getAttribute("listaGame");
+                List<Media> listaMedia = (List<Media>) session.getAttribute("listaMedia");
+                MediaService mediaServiceImpl = new MediaServiceImpl();
                 for(int i=0; i<listaGames.size(); i++){
+                    String urlImagen = "";
+                    String urlVideo = "";
+                    urlImagen = mediaServiceImpl.obtenerUrlImagen(listaGames.get(i), listaMedia);
+                    urlVideo = mediaServiceImpl.obtenerUrlVideo(listaGames.get(i), listaMedia);
                 %>
                     <div class="col-md-4 mb-3">
+                        
                         <div class="card text-center" style="width: 100%; height: 100%;">
-                            
+                            <% if(urlImagen.equals("") && urlVideo.equals("")){ %>
+                                <p class="text-center text-danger mt-3">Aun no hay media de este videojuego</p>
+                            <% }else if(!urlImagen.equals("") && urlVideo.equals("")){ %>
+                                <img src="<%= urlImagen %>" class="card-img-top img-fluid" alt="#" style="height: 235px;">
+                            <% }else{%>
+                                <video id="video" loop>
+                                    <source src="<%= urlVideo %>" type="video/webm">
+                                </video>
+                            <% } %>
                           <div class="card-body">
                               <h3 class="card-title text-capitalize"><%= listaGames.get(i).getNombre() %></h3>
-                            <p> <text class="text-info">Precio:  </text>  <%= listaGames.get(i).getPrecio() %></p>
+                            <p> <text class="text-info">Precio:  </text>  <%= listaGames.get(i).getPrecio() %> €</p>
                             <p> <text class="text-info">Stock:  </text> <%= listaGames.get(i).getStock() %></p>
                  
                             <div class="d-flex justify-content-center align-items-center">
@@ -45,8 +63,7 @@
                                 </div>
                                 <div class="me-4">
                                     
-                                    <button class="btn btn-outline-warning" type="button" data-id="<%= listaGames.get(i).getId() %>" data-nombre="<%= listaGames.get(i).getNombre() %>" data-precio="<%= listaGames.get(i).getPrecio() %>" data-stock="<%= listaGames.get(i).getStock() %>" data-bs-toggle="modal" data-bs-target="#mediaModal">Media&nbsp<i class="fa-sharp fa-solid fa-pen-to-square"></i></button>
-                                   
+                                   <button class="btn btn-outline-warning" type="button" onclick="openMediaModal(<%= listaGames.get(i).getId() %>);" data-bs-toggle="modal" data-bs-target="#mediaModal">Media <i class="fa-sharp fa-solid fa-plus"></i></button>
                                     
                                 </div>
                                 <div>
@@ -73,49 +90,33 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form id="mediaForm" method="POST" action="MediaControlador?accion=insertar">
+          <form id="mediaForm" method="POST" action="MediaControlador?accion=insertar" enctype="multipart/form-data">
             <div class="modal-body">
               <div class="form-group">
-                <label for="idInput">ID:</label>
-                <input type="text" class="form-control" id="idInput" name="id" readonly>
+                <input type="hidden" class="form-control" id="idInput" name="idVideojuego" >
+              </div>
+              <div class="form-group mb-4">
+                <label for="nombreInput">Tipo de media:</label>
+                <select name="tipo">
+                    <option value="Imagen">Imagen</option>
+                    <option value="Video">Video</option>
+                </select>
               </div>
               <div class="form-group">
-                <label for="nombreInput">Nombre:</label>
-                <input type="text" class="form-control" id="nombreInput" name="nombre" readonly>
+                <input type="file" class="form-control" id="precioInput" name="archivoMedia" >
               </div>
-              <div class="form-group">
-                <label for="precioInput">Precio:</label>
-                <input type="text" class="form-control" id="precioInput" name="precio" readonly>
-              </div>
-              <div class="form-group">
-                <label for="stockInput">Stock:</label>
-                <input type="text" class="form-control" id="stockInput" name="stock" readonly>
-              </div>
+              
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <a class="btn btn-danger" href="./listaGames.jsp">Cerrar</a>
               <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
           </form>
         </div>
       </div>
     </div>
-    <script >
-        function abroModal(id, nombre, precio, stock) {
-            let modal = document.getElementById('mediaModal');
-            let idInput = document.getElementById('idInput');
-            let nombreInput = document.getElementById('nombreInput');
-            let precioInput = document.getElementById('precioInput');
-            let stockInput = document.getElementById('stockInput');
-
-            idInput.value = id;
-            nombreInput.value = nombre;
-            precioInput.value = precio;
-            stockInput.value = stock;
-
-            modal.modal('show');
-        }
-    </script>
+    <script src="./static/js/Modal.js" ></script>
+    <script src="./static/js/controlVideo.js" ></script>
 </body>
 
 </html>

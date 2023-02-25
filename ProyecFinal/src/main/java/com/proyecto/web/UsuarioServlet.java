@@ -4,8 +4,10 @@
  */
 package com.proyecto.web;
 
+import com.proyecto.dominio.Media;
 import com.proyecto.dominio.Usuarios;
 import com.proyecto.dominio.Videojuegos;
+import com.proyecto.service.MediaService;
 import com.proyecto.service.UsuarioService;
 import com.proyecto.service.VideojuegoService;
 import java.io.File;
@@ -39,6 +41,8 @@ public class UsuarioServlet extends HttpServlet {
     UsuarioService usuarioService;
     @Inject
     VideojuegoService videojuegoService;
+    @Inject
+    MediaService mediaService;
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -131,16 +135,20 @@ public class UsuarioServlet extends HttpServlet {
         System.out.println("USU: " + usuario);
         List<Usuarios> usuarios = usuarioService.listarUsuarios();
         List<Videojuegos> videojuegos = videojuegoService.listarVideojuegos();
+        List<Media> mediaLista = mediaService.listarMedia();
+        System.out.println("MEDIA: " + mediaLista);
         
         System.out.println("DATOS: " + usuario);
         if(usuarioService.validacionUsu(usuario)){
             Usuarios usuarioSesion = usuarioService.usuarioSesion(usuario);
             if(nomUsuario.equals("admin")){
+                request.getSession().setAttribute("listaMedia", mediaLista);
                 request.getSession().setAttribute("listaGame", videojuegos);
                 request.getSession().setAttribute("listaUsu", usuarios);
                 request.getSession().setAttribute("usuario", usuarioSesion);
                 response.sendRedirect("./homeAdmin.jsp");
             }else{
+                request.getSession().setAttribute("listaMedia", mediaLista);
                 request.getSession().setAttribute("listaGame", videojuegos);
                 request.getSession().setAttribute("usuario", usuarioSesion);
                 response.sendRedirect("./homeUser.jsp");

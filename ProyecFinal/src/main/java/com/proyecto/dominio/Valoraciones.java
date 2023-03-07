@@ -52,9 +52,19 @@ public class Valoraciones implements Serializable {
     public Valoraciones() {
     }
 
+    public Valoraciones(String comentario, Integer puntuacion, Usuarios idUsuario, Videojuegos idVideojuego) {
+        this.comentario = comentario;
+        this.puntuacion = puntuacion;
+        this.idUsuario = idUsuario;
+        this.idVideojuego = idVideojuego;
+    }
+    
+    
+
     public Valoraciones(Integer id) {
         this.id = id;
     }
+    
 
     public Integer getId() {
         return id;
@@ -118,7 +128,9 @@ public class Valoraciones implements Serializable {
 
     @Override
     public String toString() {
-        return "com.proyecto.dominio.Valoraciones[ id=" + id + " ]";
+        return "Valoraciones{" + "id=" + id + ", comentario=" + comentario + ", puntuacion=" + puntuacion + ", idUsuario=" + idUsuario + ", idVideojuego=" + idVideojuego + '}';
     }
+
+    
     
 }

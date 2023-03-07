@@ -4,10 +4,14 @@
  */
 package com.proyecto.web;
 
+import com.proyecto.dominio.Plataforma;
+import com.proyecto.dominio.VideojuegoPlataforma;
 import com.proyecto.dominio.Videojuegos;
+import com.proyecto.service.VideojuegoPlataformaService;
 import com.proyecto.service.VideojuegoService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -24,6 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 public class VideojuegoServlet extends HttpServlet {
     @Inject
     VideojuegoService videojuegoService;
+    @Inject
+    VideojuegoPlataformaService videojuegoPlataformaService;
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -38,6 +44,9 @@ public class VideojuegoServlet extends HttpServlet {
         String accion = request.getParameter("accion");
             if (accion != null){
                 switch (accion){
+                    case "buscar":
+                        this.buscar(request, response);
+                        break;
                     case "add":
                         this.insertar(request, response);
                         break;
@@ -47,7 +56,7 @@ public class VideojuegoServlet extends HttpServlet {
                         break;
                         
                     case "editar":
-                        //this.editar(request, response);
+                        this.editar(request, response);
                         break;
                         
                     case "eliminar":
@@ -74,6 +83,55 @@ public class VideojuegoServlet extends HttpServlet {
         System.out.println("GAME: " + game);
         
         videojuegoService.insertarVideojuegos(game);
+        
+        List<Videojuegos> videojuegos = videojuegoService.listarVideojuegos();
+        request.getSession().setAttribute("listaGame", videojuegos);
+        
+        response.sendRedirect("./listaGames.jsp");
+        
+    }
+    
+    private void buscar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        String nombreBusqueda = request.getParameter("busqueda");
+         
+        List<Videojuegos> videojuegos = videojuegoService.listarVideojuegos();
+        ArrayList<Videojuegos> listaBusqueda = new ArrayList<>();
+        for(Videojuegos gameBusqueda : videojuegos){
+            if(gameBusqueda.getNombre().toLowerCase().startsWith(nombreBusqueda.toLowerCase())){
+                listaBusqueda.add(gameBusqueda);
+            }
+        }
+        
+        request.getSession().setAttribute("listaBusqueda", listaBusqueda);
+        response.sendRedirect("./busqueda.jsp");
+        
+    }
+    
+    private void editar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        String[] plataformasSeleccionadas = request.getParameterValues("plataforma");
+        Integer id = Integer.parseInt(request.getParameter("idVideojuego"));
+        String nombreJuego = request.getParameter("nombre");
+        Float precio = Float.parseFloat(request.getParameter("precio"));
+        Integer stock = Integer.parseInt(request.getParameter("stock"));
+        String descripcion = request.getParameter("descripcion");
+        
+        for (String plataformasSeleccionada : plataformasSeleccionadas) {
+            System.out.println("ID PLATAFORMA: " + plataformasSeleccionada);
+            Integer idPlataforma = Integer.parseInt(plataformasSeleccionada);
+            Plataforma p = new Plataforma(idPlataforma);
+            Videojuegos v = new Videojuegos(id);
+            VideojuegoPlataforma vp = new VideojuegoPlataforma(v, p);
+            videojuegoPlataformaService.insertarVideojuegoPlataforma(vp);
+        }
+        
+        Videojuegos game = new Videojuegos(id, nombreJuego, precio, stock, descripcion);
+        System.out.println("GAME: " + game);
+        
+        videojuegoService.actualizarVideojuegos(game);
         
         List<Videojuegos> videojuegos = videojuegoService.listarVideojuegos();
         request.getSession().setAttribute("listaGame", videojuegos);

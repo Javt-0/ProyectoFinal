@@ -28,6 +28,8 @@ public interface UsuarioService {
     
     public void eliminarUsuarios(Usuarios u);
     
+    public Usuarios usuarioID(Usuarios usuario);
+    
     public Usuarios usuarioSesion(Usuarios usuario);
     
     public boolean validacionUsu (Usuarios usuario);

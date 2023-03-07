@@ -27,7 +27,7 @@ public interface MediaService {
     
     public void eliminarMedia(Media m);
     
-    public String obtenerUrlImagen(Videojuegos v, List<Media> listaMedia);
+    public String obtenerUrlPortada(Videojuegos v, List<Media> listaMedia);
     
     public String obtenerUrlVideo(Videojuegos v, List<Media> listaMedia);
 }

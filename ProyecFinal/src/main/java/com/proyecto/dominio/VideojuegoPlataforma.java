@@ -44,6 +44,11 @@ public class VideojuegoPlataforma implements Serializable {
     public VideojuegoPlataforma() {
     }
 
+    public VideojuegoPlataforma(Videojuegos idVideojuego, Plataforma idPlataforma) {
+        this.idVideojuego = idVideojuego;
+        this.idPlataforma = idPlataforma;
+    }
+    
     public VideojuegoPlataforma(Integer id) {
         this.id = id;
     }

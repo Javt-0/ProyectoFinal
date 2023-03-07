@@ -12,6 +12,15 @@
     <meta http-equiv="Content-type" content="text/html charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- slider stylesheet -->
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Roboto:400,700&display=swap" rel="stylesheet">
     <!-- Bootstrap -->
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" 
@@ -48,7 +57,7 @@
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark backg">
         <div class="container-fluid">
-            <a class="navbar-brand font-weight-bold" href="./homeUsu.jsp">
+            <a class="navbar-brand font-weight-bold" href="./homeUser.jsp">
                 <img class="mr-2" src="./static/img/logo.png" />
                 App
             </a>
@@ -71,11 +80,9 @@
                         if (usuario.getNombreUsuario() != null) {
                         %>
                           <li class="nav-item ms-4">
-                            <a class="nav-link" href="./añadir.jsp">Mi lista de Videojuegos&nbsp&nbsp&nbsp<i class="fa-sharp fa-solid fa-plus"></i></a>
+                            <a class="nav-link" href="./carrito.jsp">Mi Carrito&nbsp&nbsp&nbsp<i class="fa-solid fa-cart-shopping"></i></a>
                           </li>
-                          <li class="nav-item ms-4">
-                            <a class="nav-link" href="./grafico.jsp">Vista Usuario&nbsp&nbsp&nbsp<i class="fa fa-chart-simple"></i></a>
-                          </li>
+                          
                           <li class="nav-item ms-4">
                             <a class="nav-link text-danger" href="./recursos/destroy.jsp">Cerrar Sesion&nbsp&nbsp<i class="fa-sharp fa-solid fa-power-off"></i></a>
                           </li>
@@ -96,7 +103,7 @@
                         if (usuario.getNombreUsuario() != null) {
                         %>
                           <div class="p-2">
-                            <a href="" style="text-decoration: none;"> <img src="<%= usuario.getImgPerfil() %>" class="rounded-circle" style=" border-radius: 50%; max-width: 90px; max-height: 90px;"> &nbsp&nbsp<%= usuario.getEmail() %></a> 
+                            <a href="./perfil.jsp" style="text-decoration: none;"> <img src="<%= usuario.getImgPerfil() %>" class="rounded-circle" style=" border-radius: 50%; max-width: 90px; max-height: 90px;"> &nbsp&nbsp<%= usuario.getEmail() %></a> 
                           </div>
                         <%
                         }

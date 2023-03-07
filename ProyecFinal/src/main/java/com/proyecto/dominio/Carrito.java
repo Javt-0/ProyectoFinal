@@ -44,6 +44,13 @@ public class Carrito implements Serializable {
     public Carrito() {
     }
 
+    public Carrito(Usuarios idUsuario, Videojuegos idVideojuego) {
+        this.idUsuario = idUsuario;
+        this.idVideojuego = idVideojuego;
+    }
+    
+    
+
     public Carrito(Integer id) {
         this.id = id;
     }

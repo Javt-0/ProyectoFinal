@@ -1,39 +1,47 @@
 <%-- 
-    Document   : homeUser
-    Created on : 23 feb. 2023, 0:22:27
+    Document   : carrito
+    Created on : 7 mar. 2023, 1:55:12
     Author     : jonat
 --%>
 
-<%@page import="com.proyecto.service.MediaService"%>
 <%@page import="com.proyecto.service.MediaServiceImpl"%>
+<%@page import="com.proyecto.service.MediaService"%>
 <%@page import="com.proyecto.dominio.Media"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.proyecto.dominio.Videojuegos"%>
+<%@page import="com.proyecto.dominio.Usuarios"%>
+<%@page import="com.proyecto.dominio.Carrito"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <jsp:include page="./recursos/headerUsu.jsp" />
-    <div class="nav-scroller py-1 mb-2">
-        <nav class="nav d-flex justify-content-center align-items-center">
-            <a class="p-2 link-secondary text-white me-5" href="#" style="text-decoration: none;"><i class="fa-solid fa-desktop"></i> PC</a>
-            <a class="p-2 link-secondary text-white me-5" href="#" style="text-decoration: none;"><i class="fa-brands fa-xbox"></i> Xbox</a>
-            <a class="p-2 link-secondary text-white me-5" href="#" style="text-decoration: none;"><i class="fa-brands fa-playstation"></i> Playstation</a>
-            <a class="p-2 link-secondary text-white" href="#" style="text-decoration: none;"><i class="fa-solid fa-gamepad"></i> Nintento</a>
-        </nav>
+
+
+<% 
+    List<Carrito> listaCarrito = (List<Carrito>) session.getAttribute("listaCarrito"); 
+    Usuarios usuario = (Usuarios) session.getAttribute("usuario");
+    ArrayList<Videojuegos> listaGames = new ArrayList();
+    for(int i=0; i<listaCarrito.size(); i++){
+        if(usuario.getId() == listaCarrito.get(i).getIdUsuario().getId()){
+            listaGames.add(listaCarrito.get(i).getIdVideojuego());
+        }
+    }
+    
+    if(listaGames.isEmpty()){
+%>
+    <div class="col-md-4 mx-auto">
+        <div class="card card-body text-center">
+          <p>No tienes videojuegos añadidos</p>
+          <a href="./homeUser.jsp">Añade Uno!</a>
+        </div>
     </div>
-    <div class="container pt-4 p-3 ">
-            <div class="row mb-4">
-              <div class="col-md-4 mx-auto">
-                <div>
-                  <form class="d-flex" method="POST" action="VideojuegoControlador?accion=buscar">
-                      <input class="form-control me-2 " name="busqueda" type="search" placeholder="Search" aria-label="Search">
-                      <button class="btn btn-outline-secondary" type="submit">  <i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
-                  </form>
-                </div>
-              </div>
-            </div>
+
+<% } %>
+<div class="container pt-4 p-3 ">
+            
             <div class="row">
                 <% 
                 int id = 0;
-                List<Videojuegos> listaGames = (List<Videojuegos>) session.getAttribute("listaGame");
                 List<Media> listaMedia = (List<Media>) session.getAttribute("listaMedia");
                 MediaService mediaServiceImpl = new MediaServiceImpl();
                 for(int i=0; i<listaGames.size(); i++){
@@ -108,4 +116,3 @@
 </body>
 
 </html>
-

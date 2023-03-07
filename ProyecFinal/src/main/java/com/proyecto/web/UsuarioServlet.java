@@ -4,9 +4,11 @@
  */
 package com.proyecto.web;
 
+import com.proyecto.dominio.Carrito;
 import com.proyecto.dominio.Media;
 import com.proyecto.dominio.Usuarios;
 import com.proyecto.dominio.Videojuegos;
+import com.proyecto.service.CarritoService;
 import com.proyecto.service.MediaService;
 import com.proyecto.service.UsuarioService;
 import com.proyecto.service.VideojuegoService;
@@ -43,6 +45,8 @@ public class UsuarioServlet extends HttpServlet {
     VideojuegoService videojuegoService;
     @Inject
     MediaService mediaService;
+    @Inject
+    CarritoService carritoService;
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -136,6 +140,7 @@ public class UsuarioServlet extends HttpServlet {
         List<Usuarios> usuarios = usuarioService.listarUsuarios();
         List<Videojuegos> videojuegos = videojuegoService.listarVideojuegos();
         List<Media> mediaLista = mediaService.listarMedia();
+        List<Carrito> carritoLista = carritoService.listarCarrito();
         System.out.println("MEDIA: " + mediaLista);
         
         System.out.println("DATOS: " + usuario);
@@ -148,6 +153,8 @@ public class UsuarioServlet extends HttpServlet {
                 request.getSession().setAttribute("usuario", usuarioSesion);
                 response.sendRedirect("./homeAdmin.jsp");
             }else{
+                
+                request.getSession().setAttribute("listaCarrito", carritoLista);
                 request.getSession().setAttribute("listaMedia", mediaLista);
                 request.getSession().setAttribute("listaGame", videojuegos);
                 request.getSession().setAttribute("usuario", usuarioSesion);
@@ -175,3 +182,12 @@ public class UsuarioServlet extends HttpServlet {
         response.sendRedirect("./homeAdmin.jsp");
     }
 }
+
+
+/*
+List<Integer> lista = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+List<Integer> ultimosCinco = lista.subList(Math.max(lista.size() - 5, 0), lista.size());
+
+System.out.println(ultimosCinco); // imprimirá [6, 7, 8, 9, 10]
+*/

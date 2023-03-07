@@ -30,17 +30,17 @@ public class VideojuegoPlataformaDaoImpl implements VideojuegoPlataformaDao{
     }
     
     @Override
-    public void insertUsuarios(VideojuegoPlataforma vp){
+    public void insertVideojuegoPlataforma(VideojuegoPlataforma vp){
         em.persist(vp);
     }
     
     @Override
-    public void updateUsuarios(VideojuegoPlataforma vp){
+    public void updateVideojuegoPlataforma(VideojuegoPlataforma vp){
         em.merge(vp);
     }
     
     @Override
-    public void deleteUsuarios(VideojuegoPlataforma vp){
+    public void deleteVideojuegoPlataforma(VideojuegoPlataforma vp){
         em.remove(vp);
     }
 }

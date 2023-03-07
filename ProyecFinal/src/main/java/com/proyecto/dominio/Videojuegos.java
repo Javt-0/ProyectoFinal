@@ -48,7 +48,7 @@ public class Videojuegos implements Serializable {
     private Float precio;
     @Column(name = "stock")
     private Integer stock;
-    @Size(max = 1000)
+    @Size(max = 2000)
     @Column(name = "descripcion")
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idVideojuego")
@@ -67,6 +67,16 @@ public class Videojuegos implements Serializable {
         this.id = id;
     }
 
+    public Videojuegos(Integer id, String nombre, Float precio, Integer stock, String descripcion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.stock = stock;
+        this.descripcion = descripcion;
+    }
+    
+    
+    
     public Videojuegos(String nombre, Float precio, Integer stock, String descripcion) {
         this.nombre = nombre;
         this.precio = precio;

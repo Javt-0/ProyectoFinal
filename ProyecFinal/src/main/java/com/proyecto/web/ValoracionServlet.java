@@ -5,8 +5,10 @@
 package com.proyecto.web;
 
 import com.proyecto.dominio.Media;
+import com.proyecto.dominio.Usuarios;
+import com.proyecto.dominio.Valoraciones;
 import com.proyecto.dominio.Videojuegos;
-import com.proyecto.service.MediaService;
+import com.proyecto.service.ValoracionesService;
 import com.proyecto.service.VideojuegoService;
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +19,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,11 +29,10 @@ import javax.servlet.http.Part;
  *
  * @author jonat
  */
-@WebServlet(name = "MediaControlador", urlPatterns = {"/MediaControlador"})
-@MultipartConfig
-public class MediaServlet extends HttpServlet {
+@WebServlet(name = "ValoracionControlador", urlPatterns = {"/ValoracionControlador"})
+public class ValoracionServlet extends HttpServlet {
     @Inject
-    MediaService mediaService;
+    ValoracionesService valoracionesService;
     @Inject
     VideojuegoService videojuegoService;
     
@@ -41,7 +41,7 @@ public class MediaServlet extends HttpServlet {
             throws ServletException, IOException {
         
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -69,49 +69,30 @@ public class MediaServlet extends HttpServlet {
             } else {
                 response.sendRedirect("index.jsp");
             }
-        
     }
-
+    
     private void insertar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        Integer id = Integer.parseInt(request.getParameter("idVideojuego"));
-        Videojuegos game = new Videojuegos(id);
+        Integer puntuacion = Integer.parseInt(request.getParameter("puntuacion"));
+        Integer idUser = Integer.parseInt(request.getParameter("idUsuario"));
+        Usuarios u = new Usuarios(idUser);
+        Integer idGame = Integer.parseInt(request.getParameter("idVideojuego"));
+        Videojuegos v = new Videojuegos(idGame);
+        String comentario = request.getParameter("comentario");
         
-        String tipoMedia = request.getParameter("tipo");
-        if(tipoMedia.equalsIgnoreCase("Video") || tipoMedia.equalsIgnoreCase("Imagen") || tipoMedia.equalsIgnoreCase("Portada")){
-            //Subir fotos
-            Part filePart = request.getPart("archivoMedia");
-            String fileName = filePart.getSubmittedFileName();
-            filePart.write(fileName);
-            File imgTemporal = new File("C:\\glassfish5\\glassfish\\domains\\domain1\\generated\\jsp\\ProyecFinal-1.0\\" + fileName);
-            String rutaTemporal = imgTemporal.getPath();
-            System.out.println("Temporal: " + rutaTemporal);
-            String url = "C:\\Users\\jonat\\Desktop\\DAM 2\\1º Evaluacion\\PROGRAMACION (Acceso a datos)\\Java\\PROYECFINAL\\ProyectoFinal\\ProyecFinal\\src\\main\\webapp\\img\\game\\" + fileName;
-            System.out.println("RUTA DESTINO: " + url);
-            File destFile = new File(url);
-            Files.move(Paths.get(rutaTemporal), Paths.get(url), StandardCopyOption.REPLACE_EXISTING);
-            String imgUrl = "./img/game/" + fileName;
-            //termina codigo para subir foto
-
-            Media media = new Media(imgUrl, tipoMedia, game);
-            mediaService.insertarMedia(media);
-        }else if(tipoMedia.equalsIgnoreCase("Iframe")){
-            String iframe = request.getParameter("archivoMedia");
-            Media media = new Media(iframe, tipoMedia, game);
-            System.out.println("MEDIA: " + media);
-            mediaService.insertarMedia(media);
-        }
-        
-        
-        
+        Valoraciones valoracion = new Valoraciones(comentario, puntuacion, u, v);
+        System.out.println("Valoracion: " + valoracion);
+        valoracionesService.insertarValoraciones(valoracion);
         
         List<Videojuegos> videojuegos = videojuegoService.listarVideojuegos();
-        
-        List<Media> mediaLista = mediaService.listarMedia();
-        request.getSession().setAttribute("listaMedia", mediaLista);
         request.getSession().setAttribute("listaGame", videojuegos);
-        response.sendRedirect("./listaGames.jsp");
+        
+        response.sendRedirect("./homeUser.jsp");
     }
 
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }
 }

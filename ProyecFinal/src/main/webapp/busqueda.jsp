@@ -1,6 +1,6 @@
 <%-- 
-    Document   : homeUser
-    Created on : 23 feb. 2023, 0:22:27
+    Document   : busqueda
+    Created on : 7 mar. 2023, 3:02:49
     Author     : jonat
 --%>
 
@@ -30,13 +30,25 @@
                 </div>
               </div>
             </div>
+            
+            
             <div class="row">
                 <% 
                 int id = 0;
-                List<Videojuegos> listaGames = (List<Videojuegos>) session.getAttribute("listaGame");
+                List<Videojuegos> listaGames = (List<Videojuegos>) session.getAttribute("listaBusqueda");
                 List<Media> listaMedia = (List<Media>) session.getAttribute("listaMedia");
-                MediaService mediaServiceImpl = new MediaServiceImpl();
-                for(int i=0; i<listaGames.size(); i++){
+                MediaService mediaServiceImpl = new MediaServiceImpl(); 
+                if(listaGames.isEmpty()){
+                %>
+                    <div class="col-md-4 mx-auto">
+                        <div class="card card-body text-center">
+                            <p class="text-danger">Sin resultados</p>
+                        </div>
+                    </div>
+                <% } %>
+                
+                
+                <%for(int i=0; i<listaGames.size(); i++){
                     String urlImagen = "";
                     String urlVideo = "";
                     urlImagen = mediaServiceImpl.obtenerUrlPortada(listaGames.get(i), listaMedia);

@@ -9,3 +9,11 @@ function openMediaModal(id) {
     idInput.value = id;
     modal.showModal();
 }
+
+function openEditModal(id) {
+    console.log('Se hizo clic en el botón con ID ' + id);
+    let modal = document.getElementById('editarGameModal');
+    let idInput = document.getElementById('idGame');
+    idInput.value = id;
+    modal.showModal();
+}

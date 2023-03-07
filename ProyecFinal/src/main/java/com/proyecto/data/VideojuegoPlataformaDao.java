@@ -16,9 +16,9 @@ public interface VideojuegoPlataformaDao {
       
     public  VideojuegoPlataforma  findVideojuegoPlataformaById(VideojuegoPlataforma vp);
     
-    public void insertUsuarios(VideojuegoPlataforma vp);
+    public void insertVideojuegoPlataforma(VideojuegoPlataforma vp);
 
-    public void updateUsuarios(VideojuegoPlataforma vp);
+    public void updateVideojuegoPlataforma(VideojuegoPlataforma vp);
     
-    public void deleteUsuarios(VideojuegoPlataforma vp);
+    public void deleteVideojuegoPlataforma(VideojuegoPlataforma vp);
 }

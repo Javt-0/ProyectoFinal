@@ -30,7 +30,8 @@
      <!-- contenidos estaticos -->
     <link rel="stylesheet" href="./static/css/index.css">
     <link rel="stylesheet" href="./lb/icon/css/all.min.css">
-
+    <script src="./static/js/Modal.js" ></script>
+    <script src="./static/js/controlVideo.js" ></script>
     <%
     String rutaAbsoluta = request.getRequestURI();
     if (rutaAbsoluta.equals("/ProyecFinal/") || rutaAbsoluta.equals("/ProyecFinal/index.jsp")) {
@@ -71,9 +72,21 @@
                         Usuarios usuario = (Usuarios) session.getAttribute("usuario");
                         if (usuario.getNombreUsuario() != null) {
                         %>
-                          <li class="nav-item ms-4">
-                            <a class="nav-link" href="./addGame.jsp">Añadir Videojuegos&nbsp&nbsp&nbsp<i class="fa-sharp fa-solid fa-plus"></i></a>
+                        <li class="nav-item dropdown ms-4">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Añadir
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <li class="nav-item ms-4">
+                                <a class="nav-link" href="./addGame.jsp">Videojuegos&nbsp&nbsp&nbsp<i class="fa-sharp fa-solid fa-plus"></i></a>
+                              </li>
+                              <li class="nav-item ms-4">
+                                <a class="nav-link" href="./addGame.jsp">Plataforma&nbsp&nbsp&nbsp<i class="fa-sharp fa-solid fa-plus"></i></a>
+                              </li>
+                  
+                            </ul>
                           </li>
+                          
                           <li class="nav-item ms-4">
                             <a class="nav-link" href="./listaGames.jsp">Lista de Videojuegos&nbsp&nbsp&nbsp<i class="fa-solid fa-list"></i></a>
                           </li>
@@ -111,4 +124,4 @@
         </div>
     </nav>
 
-      <main class="">
+      <main class="main">

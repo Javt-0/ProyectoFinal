@@ -59,14 +59,13 @@ public class MediaServiceImpl implements MediaService{
     }
     
     @Override
-    public String obtenerUrlImagen(Videojuegos v, List<Media> listaMedia){
+    public String obtenerUrlPortada(Videojuegos v, List<Media> listaMedia){
         String url = "";
         
         int id = v.getId();
         for(int j=0; j<listaMedia.size(); j++){
             Videojuegos game = listaMedia.get(j).getIdVideojuego();
-            System.out.println("ESTE ES EL ID "+game.getId());
-            if(game.getId() == id && listaMedia.get(j).getTipo().equalsIgnoreCase("imagen")){
+            if(game.getId() == id && listaMedia.get(j).getTipo().equalsIgnoreCase("Portada")){
                 url = listaMedia.get(j).getUrlmedia();
             }
         }
@@ -82,7 +81,7 @@ public class MediaServiceImpl implements MediaService{
         for(int j=0; j<listaMedia.size(); j++){
             Videojuegos game = listaMedia.get(j).getIdVideojuego();
             System.out.println("ESTE ES EL ID "+game.getId());
-            if(game.getId() == id && listaMedia.get(j).getTipo().equalsIgnoreCase("video")){
+            if(game.getId() == id && listaMedia.get(j).getTipo().equalsIgnoreCase("Video")){
                 url = listaMedia.get(j).getUrlmedia();
             }
         }

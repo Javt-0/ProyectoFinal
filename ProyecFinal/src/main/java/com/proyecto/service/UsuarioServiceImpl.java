@@ -61,6 +61,20 @@ public class UsuarioServiceImpl implements UsuarioService{
     }
     
     @Override
+    public Usuarios usuarioID(Usuarios usuario){
+        ArrayList<Usuarios> todosUsuarios = new ArrayList<>();
+        todosUsuarios.addAll(usuarioDao.findAllUsuarios());
+        Usuarios usuSesion = new Usuarios();
+        for(int i=0; i<todosUsuarios.size(); i++){
+            if(todosUsuarios.get(i).getId() == usuario.getId()){
+                usuSesion = todosUsuarios.get(i);
+            }
+        }
+        return usuSesion;
+    }
+    
+    
+    @Override
     public Usuarios usuarioSesion(Usuarios usuario){
         ArrayList<Usuarios> todosUsuarios = new ArrayList<>();
         todosUsuarios.addAll(usuarioDao.findAllUsuarios());
